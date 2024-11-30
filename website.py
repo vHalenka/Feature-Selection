@@ -27,7 +27,7 @@ def generate_html(animation_dir, noise_distribution_dir, output_html):
         f.write("<html><head><title>Experiment Results</title></head><body>\n")
         f.write("<h1>Experiment Results</h1>\n")
         f.write("""<p>This website showcases how different settings 
-                affect the performance of a machine learning model on a 
+                affect the performance of a Tsetlin machine learning model on a 
                 custom dataset. The dataset has built-in noise that changes 
                 based on position, making it more challenging to learn. 
                 We tested how changing parameters like noise type, 
