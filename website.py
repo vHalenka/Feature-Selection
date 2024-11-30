@@ -26,7 +26,16 @@ def generate_html(animation_dir, noise_distribution_dir, output_html):
     with open(output_html, "w") as f:
         f.write("<html><head><title>Experiment Results</title></head><body>\n")
         f.write("<h1>Experiment Results</h1>\n")
-        
+        f.write("""<p>This website showcases how different settings 
+                affect the performance of a machine learning model on a 
+                custom dataset. The dataset has built-in noise that changes 
+                based on position, making it more challenging to learn. 
+                We tested how changing parameters like noise type, 
+                reliability, and model settings impacts the results. 
+                You can explore animations showing how the model evolves 
+                over time and see noise distributions for each setup.</p>\n
+                """)
+                
         # Add noise distribution section
         f.write("<h2>Noise Distributions</h2>\n")
         for plot_file in sorted(os.listdir(noise_distribution_dir)):
@@ -36,14 +45,14 @@ def generate_html(animation_dir, noise_distribution_dir, output_html):
                 f.write(f'<img src="{noise_distribution_dir}/{plot_file}" alt="{plot_file}" style="width: 600px;">\n')
                 f.write(f'</div>\n')
 
-        # Add animations section
+       # Add animations section
         f.write("<h2>Animations</h2>\n")
         for group, files in sorted(groups.items()):
             f.write(f"<h3>{group}</h3>\n")
             f.write('<div style="display: flex; flex-wrap: wrap;">\n')
             for filename in sorted(files):
                 f.write(f'<div style="margin: 10px;">\n')
-                f.write(f'<video width="300" controls>\n')
+                f.write(f'<video width="300" loop muted controls>\n')  # Add loop, autoplay, and muted
                 f.write(f'  <source src="{animation_dir}/{filename}" type="video/mp4">\n')
                 f.write("  Your browser does not support the video tag.\n")
                 f.write("</video>\n")
