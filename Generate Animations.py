@@ -1,23 +1,20 @@
-import itertools
 import os
 import numpy as np
 import matplotlib.pyplot as plt
 import random
 from tqdm import tqdm
 from tmu.models.classification.vanilla_classifier import TMClassifier
-import time
-import matplotlib.patches as patches
 import logging
 from matplotlib.animation import FuncAnimation
 from IPython.display import HTML
-
-from tqdm import tqdm
 import json
 
 # Set logging level for matplotlib to WARNING or ERROR
 logging.getLogger('matplotlib').setLevel(logging.WARNING)
 
-
+####################################################################################
+## Dataset generation
+####################################################################################
 def create_samples_with_centered_reliability(
     num_samples=1000,
     num_values=500,
@@ -86,8 +83,9 @@ def create_samples_with_centered_reliability(
     return noisy_matrix, noise_matrix
 
 
-
-
+####################################################################################
+## Feedback
+####################################################################################
 def count_ta_states(tm):
     number_of_literals = tm.clause_banks[0].number_of_features
     ta_states_array = np.zeros((tm.number_of_classes, 2, tm.number_of_clauses // 2, number_of_literals), dtype=np.uint32)
@@ -157,21 +155,11 @@ def replace_least_freq(selected_bits, total_bits, bit_frequencies, num_replace):
     selected_bits = np.append(selected_bits,new_bits)
     
     return selected_bits[:total_bits], removed_bits
-def plot_distribution(matrix, noise_matrix):
-    noise_distribution = np.sum(noise_matrix, axis=0)
-    
-    plt.figure(figsize=(12, 6))
-    plt.plot(noise_distribution, label='Noise Distribution', marker='x', linestyle='--', color='r')
-    plt.title("Noise Distribution Across Positions")
-    plt.xlabel("Position")
-    plt.ylabel("Sum of 1's (Noise Intensity)")
-    plt.legend()
-    plt.show()
 
 
-epochs = 50
-max_included_literals = 32
-
+####################################################################################
+## Testing multiple setups
+####################################################################################
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -182,6 +170,9 @@ import json
 # Directory to save animations and results
 output_dir = "tm_parameter_effects"
 os.makedirs(output_dir, exist_ok=True)
+
+epochs = 50
+max_included_literals = 32
 
 # Default parameter values
 default_params = {
@@ -217,7 +208,10 @@ parameter_variations = {
 total_combinations = sum(len(v) for v in parameter_variations.values())
 print(f"Total combinations: {total_combinations}")
 
-# Function to run experiments and create animations
+
+####################################################################################
+## Animations - setup
+####################################################################################
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -381,6 +375,9 @@ def generate_animation(
 
 
 
+####################################################################################
+## Animations - execution
+####################################################################################
 # Run experiment function with animations
 def run_experiment(varied_param, varied_value, params):
     params = params.copy()
